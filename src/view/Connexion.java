@@ -19,6 +19,10 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import controller.AffichagePwd;
+import controller.ResetPassword;
+import controller.testNumClient;
+
 /**
  * @author Steffie Lim
  *
@@ -37,6 +41,7 @@ public class Connexion extends JPanel{
 	private JPanel boitier; //panel de la matrice
 	private JPanel panLabelPwd;
 	private JPanel panValid;
+	private JPanel panReset;
 	private JLabel nClient; //Label du numero client
 	private JLabel labelDmdPwd;
 	private JLabel labelPwd;
@@ -44,6 +49,7 @@ public class Connexion extends JPanel{
 	private JPasswordField champPwd; //champ du pwd
 	JButton[] button; //tableau des boutons pour le boitier
 	private JButton valider;
+	private JButton reset;
 	
 	private Dimension taille_case = new Dimension(50,40); //Dimension d'une case
 
@@ -78,7 +84,10 @@ public class Connexion extends JPanel{
 		button = new JButton[25];
 		
 		panValid = new JPanel();
-		valider = new JButton("valider");
+		valider = new JButton("Valider");
+		
+		panReset = new JPanel();
+		reset = new JButton(new ResetPassword(this,"Reset"));
 		
 	}
 	
@@ -90,10 +99,13 @@ public class Connexion extends JPanel{
 		pan_saisieClient.setLayout(new GridBagLayout());
 		pan_saisieClient.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		//pan_saisieClient.setBackground(Color.CYAN);
+		
 		panNClient.add(nClient);
 		panNClient.add(num_client);
 		
 		panPassField.add(labelPwd);
+		
+		champPwd.setEchoChar('*');
 		panPassField.add(champPwd);
 		panValid.add(valider);
 		
@@ -115,6 +127,7 @@ public class Connexion extends JPanel{
 			button[i] = new JButton(); //chaque case du tableau devient un bouton
 			button[i].setPreferredSize(taille_case); //definie la taille de chaque case
 			boitier.add(button[i]); //ajout au panel dedié a la matrice du boitier
+			
 		}
 		
 		//Transforme le tableau numero en un arraylist
@@ -131,19 +144,41 @@ public class Connexion extends JPanel{
 			
 			if(button[choix_cases].getText() == ""){
 				button[choix_cases].setText(num_list.get(choix_chiffres));
+				button[choix_cases].addActionListener(new AffichagePwd(this, num_list.get(choix_chiffres)));
 				num_list.remove(choix_chiffres);
 				cmpt++;
 			}
 		}
+		
+		panReset.add(reset);
+		
 		panPwd.add(panLabelPwd);
 		panPwd.add(boitier);
-		
+		panPwd.add(panReset);
 		
 		panCon.add(pan_saisieClient);
 		panCon.add(panPwd);
 		
+		
 		return panCon;
 	}
 
+	/**
+	 * @return the num_client
+	 */
+	public JTextField getNum_client() {
+		return num_client;
+	}
+
+
+	/**
+	 * @return the champPwd
+	 */
+	public JPasswordField getChampPwd() {
+		return champPwd;
+	}
+
+
+	
 	
 }
