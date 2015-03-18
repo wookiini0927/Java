@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import controller.Refresh;
 import model.Comptes;
 import model.FichierComptes;
 
