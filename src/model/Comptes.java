@@ -20,7 +20,8 @@ import view.Fenetre;
  */
 public class Comptes {
 	private String titre;
-	private int numero_compte[] = new int[11];
+	private String numero_compte;
+	private int type_compte;
 	private double solde;
 	private double decouvert;
 	private boolean est_a_decouvert = false;
@@ -31,11 +32,12 @@ public class Comptes {
 	 * 
 	 * @param titre label du compte
 	 */
-	public Comptes(String titre){
+	public Comptes(String titre, int type){
 		this.titre = titre;
 		this.numero_compte = genererCompte();
 		this.solde = 0;
-		this.decouvert = -400;
+		this.decouvert = 0;
+		this.type_compte = type;
 	}
 	
 	/**
@@ -44,11 +46,12 @@ public class Comptes {
 	 * @param titre label du compte
 	 * @param solde  solde du compte
 	 */
-	public Comptes(String titre, double solde){
+	public Comptes(String titre, double solde, int type){
 		this.titre = titre;
 		this.numero_compte = genererCompte();
 		this.solde = solde;
 		this.decouvert = 0;
+		this.type_compte = type;
 		
 		if(this.solde < this.decouvert){
 			this.est_a_decouvert = true;
@@ -63,15 +66,29 @@ public class Comptes {
 	 * @param solde solde du compte
 	 * @param decouvert decouvert autorisŽ
 	 */
-	public Comptes(String titre, double solde, double decouvert){
+	public Comptes(String titre, double solde, double decouvert, int type){
 		this.titre = titre;
 		this.numero_compte = genererCompte();
+		this.solde = solde;
+		this.decouvert = decouvert;
+		this.type_compte = type;
+		
+		if(this.solde < this.decouvert){
+			this.est_a_decouvert = true;
+		}
+	}
+	
+	public Comptes(String titre, String IBAN, double solde, double decouvert, int type){
+		this.titre = titre;
+		this.numero_compte = IBAN;
 		this.solde = solde;
 		this.decouvert = decouvert;
 		
 		if(this.solde < this.decouvert){
 			this.est_a_decouvert = true;
 		}
+		
+		this.type_compte = type;
 	}
 
 	/**
@@ -91,14 +108,14 @@ public class Comptes {
 	/**
 	 * @return the numero_compte
 	 */
-	public int[] getNumero_compte() {
+	public String getNumero_compte() {
 		return numero_compte;
 	}
 
 	/**
 	 * @param numero_compte the numero_compte to set
 	 */
-	public void setNumero_compte(int[] numero_compte) {
+	public void setNumero_compte(String numero_compte) {
 		this.numero_compte = numero_compte;
 	}
 
@@ -145,6 +162,21 @@ public class Comptes {
 		this.est_a_decouvert = est_a_decouvert;
 	}
 
+	
+	/**
+	 * @return the type_compte
+	 */
+	public int getType_compte() {
+		return type_compte;
+	}
+
+	/**
+	 * @param type_compte the type_compte to set
+	 */
+	public void setType_compte(int type_compte) {
+		this.type_compte = type_compte;
+	}
+
 	/**
 	 * @return the cmpt_taxe
 	 */
@@ -164,13 +196,14 @@ public class Comptes {
 	 * 
 	 * @return num_compte
 	 */
-	public int[] genererCompte(){
-		int[] num_compte = new int[11];
+	public String genererCompte(){
+		String num_compte="";
 		Random r = new Random();
-		
-		for(int i = 0; i<num_compte.length;i++)
+		int i = 0;
+		while(i<10)
 		{
-			num_compte[i] = r.nextInt(10);
+			num_compte += Integer.toString(r.nextInt(10));
+			i++;
 		}
 		return num_compte;
 	}
@@ -187,7 +220,7 @@ public class Comptes {
 		
 		//Versement alors que l'utilisateur est a decouvert
 		if(this.est_a_decouvert == true){
-			JFrame fen = new Fenetre();
+			JFrame fen = new Fenetre("Projet JAVA 2014-2015", 600,400, false);
 			int answer = JOptionPane.showConfirmDialog(fen, "Vous etes deja a decouvert!!!!\nVoulez vous poursuivre l'operation?", "Confirmer", JOptionPane.YES_NO_OPTION);
 			
 			switch(answer){
@@ -216,7 +249,7 @@ public class Comptes {
 
 		//cas ou le montant est superieur au solde actuel
 		else if(verse > this.solde){
-			JFrame fen = new Fenetre();
+			JFrame fen = new Fenetre("Projet JAVA 2014-2015", 600,400, false);
 			int answer = JOptionPane.showConfirmDialog(fen, "Le versement est superieur ˆ votre solde disponible\nVoulez vous poursuivre l'operation?", "Confirmer", JOptionPane.YES_NO_OPTION);
 			
 			switch(answer){
@@ -285,14 +318,7 @@ public class Comptes {
 	@Override
 	public String toString() {
 		
-		String nc="";
-		
-		for(int i=0; i<getNumero_compte().length; i++){
-			nc += this.numero_compte[i];
-		}
-		return "Comptes [titre=" + titre + ", numero_compte="
-				+ nc + ", solde=" + solde
-				+ ", decouvert=" + decouvert + ",cmpt_taxe= " + cmpt_taxe + "]";
+		return titre + " " + numero_compte + "\t\t\t" + solde + "Euros";
 	}
 	
 	
