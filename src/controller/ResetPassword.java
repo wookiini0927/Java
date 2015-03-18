@@ -15,17 +15,16 @@ import view.Connexion;
  */
 public class ResetPassword extends AbstractAction{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 706726216277942381L;
 	private Connexion con;
+	
 	
 	public ResetPassword(Connexion con, String str){
 		super(str);
 		this.con = con;
 	}
 	
+	@Override
 	public void actionPerformed(ActionEvent e){
 		con.getChampPwd().setText("");
 	}
