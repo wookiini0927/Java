@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 
 import controller.AffichagePwd;
 import controller.ResetPassword;
+import controller.ValiderConnexion;
 import controller.testNumClient;
 
 /**
@@ -84,7 +85,7 @@ public class Connexion extends JPanel{
 		button = new JButton[25];
 		
 		panValid = new JPanel();
-		valider = new JButton("Valider");
+		valider = new JButton(new ValiderConnexion(this, fen, "Valider"));
 		
 		panReset = new JPanel();
 		reset = new JButton(new ResetPassword(this,"Reset"));
@@ -106,6 +107,7 @@ public class Connexion extends JPanel{
 		panPassField.add(labelPwd);
 		
 		champPwd.setEchoChar('*');
+		champPwd.setEditable(false);
 		panPassField.add(champPwd);
 		panValid.add(valider);
 		
