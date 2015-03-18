@@ -35,11 +35,45 @@
 		- ca depasse pas le decouvert (ou créer en plus une fonction taxe) fonction a part
 		- verifier que le montant du versement est inferieur au compte
 
+**Random Day**
+- clase history
+
 **Lundi 16 mars**
 
 - fenetre de connexion
 - bouton reset
 - actionlistener des chiffres
+
+- Création/modification classe :
+	model :
+		- Compte
+			- iban en String
+		- FichierComptes
+			-load file
+	controller :
+		affichagePwd
+		ResetPasswd
+		validerConnexion
+	view
+		connexion
+		fenetre
+		fenetreVirement
+
+**Mercredi 18 MArs**
+
+Création folders : Doc
+- Création/modification classe :
+	model :
+		- FichierCompte
+			- loadfile() en static
+			- initComptesPerso() pour la JComboBox
+	view :
+		- fenetreVirement
+			affichage presque clair
+
+- refaire Creationcomptes (renommer en ajoutCompte)
+	- doit ajouter le compte a liste (jcombobox) 
+	- doit ajouter aufichier compte beneficiaire
 
 
 ===
