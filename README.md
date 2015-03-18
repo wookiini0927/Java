@@ -46,6 +46,7 @@
 
 Idée :
 	au lancement du programme, verification du fichier csv : clients (**numeroclient identique**)
+	class creation coptes : rajouter un bouton dans la fenetre connexion, puis de là a la création ecrire dans le fichier csv
 
 	generer un numero aleatoire dans le cas ou un numero client existe deja -> fonction a faire
 	-> pareil pour le numero compte mais le faire tout le temps pour celui la
