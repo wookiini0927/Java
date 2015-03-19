@@ -1,13 +1,9 @@
-/**
- * 
- */
 package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
@@ -20,7 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import model.Comptes;
+import controller.AbandonnerVirement;
+import controller.ValiderVirement;
 import model.FichierComptes;
 
 /**
@@ -29,9 +26,7 @@ import model.FichierComptes;
  */
 public class FenetreVirement extends JPanel {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -8441863554373191378L;
 	private String numero;
 	private FichierComptes fc, benef;
@@ -44,11 +39,12 @@ public class FenetreVirement extends JPanel {
 	private JPanel panLib, panChampLib;
 	private JPanel panMontant, panMontLib;
 	private JPanel panLabDate, panRadioBut;
+	private JPanel panBoutonValider, panBoutonAbandon;
 	private JLabel num_client, nom_client, prenom_client;
 	private JLabel compteDeb, compteVir;
 	private JLabel libelle_virement, labMontant, lab_date_Virement, lab_euro;
 	private JTextField champMontant, champ_libelle;
-	private JButton newCompte;
+	private JButton newCompte, valider, abandon;
 	private JRadioButton immediat, different;
 	private JComboBox<String> comptePerso, compteBeneficiaire;
 	
@@ -105,13 +101,18 @@ public class FenetreVirement extends JPanel {
 		
 		champMontant = new JTextField("",10);
 		champ_libelle = new JTextField("",10);
+		
+		panBoutonValider = new JPanel();
+		panBoutonAbandon = new JPanel();
+		valider = new JButton(new ValiderVirement(this,"Valider"));
+		abandon = new JButton(new AbandonnerVirement(this,"Abandonner"));
 
 		init();
 	}
 	
 	public void init(){
 		fen.setTitle("Compte Bancaire " + numero);
-		fen.setSize(700, 500);
+		fen.setSize(800, 600);
 		fen.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		fen.setLocationRelativeTo(null);
 		
@@ -120,8 +121,8 @@ public class FenetreVirement extends JPanel {
 	
 	public JPanel buildContentPane(){
 		Dimension taille_info = new Dimension(180,450);
-		Dimension taille_panComptes = new Dimension(450,200);
-		Dimension taille_panVir = new Dimension(450,200);
+		Dimension taille_panComptes = new Dimension(600,200);
+		Dimension taille_panVir = new Dimension(600,200);
 		
 		panTotal.setBackground(Color.red);
 		
@@ -133,7 +134,6 @@ public class FenetreVirement extends JPanel {
 		panInfo.add(nom_client);
 		panInfo.add(prenom_client);
 		panInfo.add(newCompte);
-		
 		
 		panResume.setLayout(new GridLayout(2,1));
 		
@@ -150,7 +150,7 @@ public class FenetreVirement extends JPanel {
 		panComptes.add(comptePerso);
 		panComptes.add(compteBeneficiaire);
 		
-		GridLayout gl = new GridLayout(3,2);
+		GridLayout gl = new GridLayout(4,2);
 		panVirement.setPreferredSize(taille_panVir);
 		panVirement.setLayout(gl);
 		panVirement.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
@@ -173,15 +173,26 @@ public class FenetreVirement extends JPanel {
 		panLabDate.setLayout(align_droit);
 		panLabDate.add(lab_date_Virement);
 		
-		immediat = new JRadioButton("Immediat");
-		immediat.setSelected(true);
+		panRadioBut.setLayout(align_gauche);
+		immediat = new JRadioButton("Immediat", true);
+		//immediat.setSelected(true);
 		different = new JRadioButton("Differe");
+		
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(immediat);
 		bg.add(different);
-		
 		panRadioBut.add(immediat);
 		panRadioBut.add(different);
+		
+		
+//		panRadioBut.add(test);
+		
+		panBoutonValider.setLayout(align_droit);
+		panBoutonValider.add(valider);
+		
+		panBoutonAbandon.setLayout(align_gauche);
+		panBoutonAbandon.add(abandon);
+
 		
 		panVirement.add(panLib);
 		panVirement.add(panChampLib);
@@ -189,16 +200,134 @@ public class FenetreVirement extends JPanel {
 		panVirement.add(panMontLib);
 		panVirement.add(panLabDate);
 		panVirement.add(panRadioBut);
-
+		panVirement.add(panBoutonValider);
+		panVirement.add(panBoutonAbandon);
+		
+			
 		panResume.add(panComptes);
 		panResume.add(panVirement);
 		
 		
 		panTotal.add(panInfo, BorderLayout.EAST);
 		panTotal.add(panResume,BorderLayout.NORTH);
-		//panTotal.add(panVirement/*,BorderLayout.WEST*/);
 		
 		return panTotal;
 	}
+
+	/**
+	 * @return the champMontant
+	 */
+	public JTextField getChampMontant() {
+		return champMontant;
+	}
+
+	/**
+	 * @param champMontant the champMontant to set
+	 */
+	public void setChampMontant(JTextField champMontant) {
+		this.champMontant = champMontant;
+	}
+
+	/**
+	 * @return the champ_libelle
+	 */
+	public JTextField getChamp_libelle() {
+		return champ_libelle;
+	}
+
+	/**
+	 * @param champ_libelle the champ_libelle to set
+	 */
+	public void setChamp_libelle(JTextField champ_libelle) {
+		this.champ_libelle = champ_libelle;
+	}
+
+	/**
+	 * @return the immediat
+	 */
+	public JRadioButton getImmediat() {
+		return immediat;
+	}
+
+	/**
+	 * @param immediat the immediat to set
+	 */
+	public void setImmediat(JRadioButton immediat) {
+		this.immediat = immediat;
+	}
+
+	/**
+	 * @return the different
+	 */
+	public JRadioButton getDifferent() {
+		return different;
+	}
+
+	/**
+	 * @param different the different to set
+	 */
+	public void setDifferent(JRadioButton different) {
+		this.different = different;
+	}
+
+	/**
+	 * @return the comptePerso
+	 */
+	public JComboBox<String> getComptePerso() {
+		return comptePerso;
+	}
+
+	/**
+	 * @param comptePerso the comptePerso to set
+	 */
+	public void setComptePerso(JComboBox<String> comptePerso) {
+		this.comptePerso = comptePerso;
+	}
+
+	/**
+	 * @return the compteBeneficiaire
+	 */
+	public JComboBox<String> getCompteBeneficiaire() {
+		return compteBeneficiaire;
+	}
+
+	/**
+	 * @param compteBeneficiaire the compteBeneficiaire to set
+	 */
+	public void setCompteBeneficiaire(JComboBox<String> compteBeneficiaire) {
+		this.compteBeneficiaire = compteBeneficiaire;
+	}
+
+	/**
+	 * @return the fc
+	 */
+	public FichierComptes getFc() {
+		return fc;
+	}
+
+	/**
+	 * @param fc the fc to set
+	 */
+	public void setFc(FichierComptes fc) {
+		this.fc = fc;
+	}
+
+	/**
+	 * @return the benef
+	 */
+	public FichierComptes getBenef() {
+		return benef;
+	}
+
+	/**
+	 * @param benef the benef to set
+	 */
+	public void setBenef(FichierComptes benef) {
+		this.benef = benef;
+	}
+	
+	
+	
+	
 	
 }
