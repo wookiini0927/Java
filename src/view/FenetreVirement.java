@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -45,8 +46,9 @@ public class FenetreVirement extends JPanel {
 	private JLabel libelle_virement, labMontant, lab_date_Virement, lab_euro;
 	private JTextField champMontant, champ_libelle;
 	private JButton newCompte, valider, abandon;
-	private JRadioButton immediat, different;
-	private JComboBox<String> comptePerso, compteBeneficiaire;
+	//private JRadioButton immediat, different;
+	private JCheckBox immediat;
+	private JComboBox<String> ComboBoxComptePerso, ComboBoxCompteBenef;
 	
 	public FenetreVirement(Fenetre f){
 		super();
@@ -82,8 +84,8 @@ public class FenetreVirement extends JPanel {
 		
 		compteDeb = new JLabel("Compte a debiter");
 		compteVir = new JLabel("Compte a crediter");
-		comptePerso = new JComboBox<String>(FichierComptes.initComptesPerso(fc.getListe_comptes()));
-		compteBeneficiaire = new JComboBox<String>(FichierComptes.initComptesPerso(benef.getListe_comptes()));
+		ComboBoxComptePerso = new JComboBox<String>(FichierComptes.initComptesPerso(fc.getListe_comptes()));
+		ComboBoxCompteBenef = new JComboBox<String>(FichierComptes.initComptesPerso(benef.getListe_comptes()));
 		
 		panVirement = new JPanel();
 		
@@ -142,13 +144,13 @@ public class FenetreVirement extends JPanel {
 		panComptes.setLayout(new GridLayout(2,2));
 		panComptes.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
 		
-		comptePerso.setEditable(false);
-		compteBeneficiaire.setEditable(false);
+		ComboBoxComptePerso.setEditable(false);
+		ComboBoxCompteBenef.setEditable(false);
 		
 		panComptes.add(compteDeb);
 		panComptes.add(compteVir);
-		panComptes.add(comptePerso);
-		panComptes.add(compteBeneficiaire);
+		panComptes.add(ComboBoxComptePerso);
+		panComptes.add(ComboBoxCompteBenef);
 		
 		GridLayout gl = new GridLayout(4,2);
 		panVirement.setPreferredSize(taille_panVir);
@@ -174,18 +176,21 @@ public class FenetreVirement extends JPanel {
 		panLabDate.add(lab_date_Virement);
 		
 		panRadioBut.setLayout(align_gauche);
-		immediat = new JRadioButton("Immediat", true);
+		//immediat = new JRadioButton("Immediat", true);
 		//immediat.setSelected(true);
-		different = new JRadioButton("Differe");
+		//different = new JRadioButton("Differe");
 		
-		ButtonGroup bg = new ButtonGroup();
+		/*ButtonGroup bg = new ButtonGroup();
 		bg.add(immediat);
 		bg.add(different);
 		panRadioBut.add(immediat);
-		panRadioBut.add(different);
+		panRadioBut.add(different);*/
+
+		immediat = new JCheckBox("Immediat", true);
+
+		panRadioBut.add(immediat);
 		
 		
-//		panRadioBut.add(test);
 		
 		panBoutonValider.setLayout(align_droit);
 		panBoutonValider.add(valider);
@@ -245,57 +250,57 @@ public class FenetreVirement extends JPanel {
 	/**
 	 * @return the immediat
 	 */
-	public JRadioButton getImmediat() {
+	public JCheckBox getImmediat() {
 		return immediat;
 	}
 
 	/**
 	 * @param immediat the immediat to set
 	 */
-	public void setImmediat(JRadioButton immediat) {
+	public void setImmediat(JCheckBox immediat) {
 		this.immediat = immediat;
 	}
 
 	/**
 	 * @return the different
 	 */
-	public JRadioButton getDifferent() {
+	/*public JRadioButton getDifferent() {
 		return different;
-	}
+	}*/
 
 	/**
 	 * @param different the different to set
 	 */
-	public void setDifferent(JRadioButton different) {
+	/*public void setDifferent(JRadioButton different) {
 		this.different = different;
+	}*/
+
+	/**
+	 * @return the ComboBoxComptePerso
+	 */
+	public JComboBox<String> getComboBoxComptePerso() {
+		return ComboBoxComptePerso;
 	}
 
 	/**
-	 * @return the comptePerso
+	 * @param ComboBoxComptePerso the ComboBoxComptePerso to set
 	 */
-	public JComboBox<String> getComptePerso() {
-		return comptePerso;
+	public void setComboBoxComptePerso(JComboBox<String> ComboBoxComptePerso) {
+		this.ComboBoxComptePerso = ComboBoxComptePerso;
 	}
 
 	/**
-	 * @param comptePerso the comptePerso to set
+	 * @return the ComboBoxCompteBenef
 	 */
-	public void setComptePerso(JComboBox<String> comptePerso) {
-		this.comptePerso = comptePerso;
+	public JComboBox<String> getComboBoxCompteBenef() {
+		return ComboBoxCompteBenef;
 	}
 
 	/**
-	 * @return the compteBeneficiaire
+	 * @param ComboBoxCompteBenef the ComboBoxCompteBenef to set
 	 */
-	public JComboBox<String> getCompteBeneficiaire() {
-		return compteBeneficiaire;
-	}
-
-	/**
-	 * @param compteBeneficiaire the compteBeneficiaire to set
-	 */
-	public void setCompteBeneficiaire(JComboBox<String> compteBeneficiaire) {
-		this.compteBeneficiaire = compteBeneficiaire;
+	public void setComboBoxCompteBenef(JComboBox<String> ComboBoxCompteBenef) {
+		this.ComboBoxCompteBenef = ComboBoxCompteBenef;
 	}
 
 	/**
