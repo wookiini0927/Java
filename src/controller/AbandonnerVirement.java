@@ -14,6 +14,10 @@ import view.FenetreVirement;
  *
  */
 public class AbandonnerVirement extends AbstractAction {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5216655077720877558L;
 	private FenetreVirement fv;
 
 	/**
@@ -29,7 +33,6 @@ public class AbandonnerVirement extends AbstractAction {
 		fv.getChamp_libelle().setText("");
 		fv.getChampMontant().setText("");
 		fv.getImmediat().setSelected(true);
-		fv.getDifferent().setSelected(false);
 	}
 	
 }
