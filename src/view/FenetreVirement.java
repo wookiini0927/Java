@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -20,6 +21,7 @@ import javax.swing.JTextField;
 import controller.AbandonnerVirement;
 import controller.ValiderVirement;
 import model.FichierComptes;
+import model.History;
 
 /**
  * @author Steffie Lim
@@ -29,8 +31,10 @@ public class FenetreVirement extends JPanel {
 
 
 	private static final long serialVersionUID = -8441863554373191378L;
+	
 	private String numero;
 	private FichierComptes fc, benef;
+	private History doc;
 	private Fenetre fen;
 	private JPanel panTotal; //panel de tous les elements
 	private JPanel panInfo; //panel de gauche info du client et divers options
@@ -58,11 +62,13 @@ public class FenetreVirement extends JPanel {
 	public FenetreVirement(Fenetre fen, String[] info) {
 		super();
 		this.fen = fen;
+		
 		numero = info[0];
 		fc = new FichierComptes();
 		fc = FichierComptes.loadFile("Doc/"+numero+".csv");
 		benef = new FichierComptes();
 		benef = FichierComptes.loadFile("Doc/CompteBeneficiaire"+numero+".csv");
+		doc = new History(numero);
 		
 		panTotal = new JPanel();
 
@@ -217,6 +223,37 @@ public class FenetreVirement extends JPanel {
 		panTotal.add(panResume,BorderLayout.NORTH);
 		
 		return panTotal;
+	}
+	
+	
+
+	/**
+	 * @return the numero
+	 */
+	public String getNumero() {
+		return numero;
+	}
+
+	/**
+	 * @param numero the numero to set
+	 */
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	
+	/**
+	 * @return the doc
+	 */
+	public History getDoc() {
+		return doc;
+	}
+
+	/**
+	 * @param doc the doc to set
+	 */
+	public void setDoc(History doc) {
+		this.doc = doc;
 	}
 
 	/**
