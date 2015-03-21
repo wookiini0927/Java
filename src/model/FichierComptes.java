@@ -51,9 +51,6 @@ public class FichierComptes {
 
 			while((line=br.readLine())!=null){
 				words = line.split(";");
-				for(String m : words){
-					System.out.println(m);
-				}
 				list_compt.liste_comptes.add(new Comptes(words[0],words[1],Double.parseDouble(words[3]), Double.parseDouble(words[4]), Integer.parseInt(words[2])));
 			}
 			br.close();
@@ -63,9 +60,6 @@ public class FichierComptes {
 			return null;
 		}
 		
-		for(Comptes c : list_compt.getListe_comptes()){
-			System.out.println(c);
-		}
 		
 		return list_compt;
 	}
