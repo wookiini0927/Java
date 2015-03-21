@@ -4,12 +4,11 @@
 package model;
 
 import java.lang.Math;
-
-import java.util.Arrays;
+import java.text.DecimalFormat;
 import java.util.Random;
 
+
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import view.Fenetre;
@@ -20,7 +19,7 @@ import view.Fenetre;
  */
 public class Comptes {
 	private String titre;
-	private String numero_compte;
+	private String IBAN;
 	private int type_compte;
 	private double solde;
 	private double decouvert;
@@ -34,7 +33,7 @@ public class Comptes {
 	 */
 	public Comptes(String titre, int type){
 		this.titre = titre;
-		this.numero_compte = genererCompte();
+		this.IBAN = genererCompte();
 		this.solde = 0;
 		this.decouvert = 0;
 		this.type_compte = type;
@@ -48,7 +47,7 @@ public class Comptes {
 	 */
 	public Comptes(String titre, double solde, int type){
 		this.titre = titre;
-		this.numero_compte = genererCompte();
+		this.IBAN = genererCompte();
 		this.solde = solde;
 		this.decouvert = 0;
 		this.type_compte = type;
@@ -68,7 +67,7 @@ public class Comptes {
 	 */
 	public Comptes(String titre, double solde, double decouvert, int type){
 		this.titre = titre;
-		this.numero_compte = genererCompte();
+		this.IBAN = genererCompte();
 		this.solde = solde;
 		this.decouvert = decouvert;
 		this.type_compte = type;
@@ -80,7 +79,7 @@ public class Comptes {
 	
 	public Comptes(String titre, String IBAN, double solde, double decouvert, int type){
 		this.titre = titre;
-		this.numero_compte = IBAN;
+		this.IBAN = IBAN;
 		this.solde = solde;
 		this.decouvert = decouvert;
 		
@@ -106,17 +105,17 @@ public class Comptes {
 	}
 
 	/**
-	 * @return the numero_compte
+	 * @return the IBAN
 	 */
-	public String getNumero_compte() {
-		return numero_compte;
+	public String getIBAN() {
+		return IBAN;
 	}
 
 	/**
-	 * @param numero_compte the numero_compte to set
+	 * @param IBAN the IBAN to set
 	 */
-	public void setNumero_compte(String numero_compte) {
-		this.numero_compte = numero_compte;
+	public void setIBAN(String IBAN) {
+		this.IBAN = IBAN;
 	}
 
 	/**
@@ -282,6 +281,7 @@ public class Comptes {
 			
 			//MAJ du compte debiter
 			debiter(this,verse);
+			JOptionPane.showMessageDialog(null, "Le versement a bien ete pris en compte", "Succes", JOptionPane.OK_OPTION);
 			done = true;
 		}
 		
@@ -317,8 +317,10 @@ public class Comptes {
 	 */
 	@Override
 	public String toString() {
-		
-		return titre + " " + numero_compte + "\t\t\t" + solde + "Euros";
+		DecimalFormat df = new DecimalFormat();
+		df.setMinimumFractionDigits(2);
+		df.setDecimalSeparatorAlwaysShown(false);
+		return titre + " " + IBAN + "\t\t\t" + df.format(solde) + "Euros";
 	}
 	
 	
